@@ -1,104 +1,65 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-
-# Flask stuff:
-instance/
-.webassets-cache
-
-# Scrapy stuff:
-.scrapy
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# celery beat schedule file
-celerybeat-schedule
-
-# SageMath parsed files
-*.sage.py
-
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
-.spyderproject
-.spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
-/site
-
-# mypy
-.mypy_cache/
+class Node:
+    def __init__(self,data):
+        self.data=data
+        self.next=None
+        self.prev=None
+        
+class DoublyLinkedList:
+    
+    def __init__(self):
+        self.head= None
+    def push(self,new_data):
+        new_node = Node(new_data)
+        new_node.next = self.head
+        if self.head is not None:
+            self.head.prev = new_node
+        self.head=new_node
+        
+    def InsertAfter(self, prev_node, new_data):
+        if prev_node is None:
+            print("Node sebelumnya tidak boleh Kosong")
+            return
+        new_node= Node(new_data)
+        new_node.next=prev_node.next
+        prev_node.next = new_node
+        new_node.prev=prev_node
+        
+        if new_node.next is not None:
+            new_node.next.prev = new_node
+            
+    def append(self, new_data):
+        new_node = Node(new_data)
+        new_node.next = None
+        
+        if self.head is None:
+            new_node.prev=None
+            self.head=new_node
+            return
+        last = self.head
+        while(last.next is not None):
+            last=last.next
+            
+        last.next= new_node
+        new_node.prev= last
+        return
+    def printList(self, node):
+        
+        print("\n Traversal in Forward direct")
+        while(node is not None):
+            print("%d"%(node.data),)
+            last=node
+            node= node.next
+            
+        print("\n Traversal in reverse direct")
+        while(last is not None):
+            print("%d"%(last.data),)
+            last=last.prev
+            
+llist = DoublyLinkedList()
+llist.append(6)
+llist.push(7)
+llist.push(1)
+llist.append(4)
+llist.InsertAfter(llist.head.next, 8)
+print("Double linkedlist :")
+llist.printList(llist.head)
